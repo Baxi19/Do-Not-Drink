@@ -17,64 +17,35 @@ public class EnemyAnimations : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        //Is Stoped
-        /*if (agent.velocity == new Vector3(0, 0, 0))
-        {
-            //Debug.Log("Stoped!");
-            animator.SetBool("isWalking", false);
-            //if is in front of player
-            if (agent.remainingDistance <= agent.stoppingDistance)
-            {
-                //Debug.Log("Ready to hit the player");
-                if(!couroutineStarted)
-                {
-                    StartCoroutine(UsingYield(5));
-                }
-            }
-
-        }
-        else
-        {
-            animator.SetBool("isWalking", true);
-            //Debug.Log("Walking!");
-        }*/
-    }
-
-    void LateUpdate() {
         if (agent.velocity == new Vector3(0, 0, 0))
         {
-            //Debug.Log("Stoped!");
             animator.SetBool("isWalking", false);
             //if is in front of player
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
-                //Debug.Log("Ready to hit the player");
-                if(!couroutineStarted)
+                Debug.Log("Ready to hit the player");
+                if (!couroutineStarted)
                 {
-                    StartCoroutine(UsingYield(5));
+                    couroutineStarted = true;
+                    Invoke("Atack", 3.0f);
+                    couroutineStarted = false;
+                    animator.SetBool("isAtacking", false);
                 }
             }
-
         }
         else
         {
+            Debug.Log("Walking");
             animator.SetBool("isWalking", true);
-            //Debug.Log("Walking!");
         }
     }
 
-    IEnumerator UsingYield(int seconds)
+    void Atack()
     {
-        Debug.Log("Coroutine Start!");
+        Debug.Log("Atacking the player");
         animator.SetBool("isAtacking", true);
-        couroutineStarted = true;
-        yield return new WaitForSeconds(seconds);
-        couroutineStarted = false;
-        animator.SetBool("isAtacking", false);
-        Debug.Log("Coroutine End!");
     }
 
 }
