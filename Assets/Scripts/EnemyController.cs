@@ -22,6 +22,7 @@ public class EnemyController : MonoBehaviour
         if (distance <= lookRadius)
         {
             agent.SetDestination(target.position);
+            //Debug.Log("Moving");
             if(distance <= agent.stoppingDistance)
             {
                 // Atack the target
@@ -40,7 +41,7 @@ public class EnemyController : MonoBehaviour
 
     void FaceTarget()
     {
-        Debug.Log("Face Target");
+        //Debug.Log("Face Target");
         Vector3 direction = (target.position - transform.position).normalized; 
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
