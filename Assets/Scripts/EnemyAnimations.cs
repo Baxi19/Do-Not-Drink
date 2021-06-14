@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class EnemyAnimations : MonoBehaviour
 {
     public NavMeshAgent agent;
+    public float wait;
 
     private Animator animator;
     bool couroutineStarted = false;
@@ -29,7 +30,7 @@ public class EnemyAnimations : MonoBehaviour
                 if (!couroutineStarted)
                 {
                     couroutineStarted = true;
-                    Invoke("Atack", 3.0f);
+                    Invoke("Atack", wait);
                     couroutineStarted = false;
                     animator.SetBool("isAtacking", false);
                 }
