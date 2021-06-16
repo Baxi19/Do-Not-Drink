@@ -7,7 +7,7 @@ public class EnemyAnimations : MonoBehaviour
 {
     public NavMeshAgent agent;
     public float wait;
-
+    float hits = 3;
     private Animator animator;
     bool couroutineStarted = false;
 
@@ -18,6 +18,10 @@ public class EnemyAnimations : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    void Update() {
+        
+    }
+
     void LateUpdate()
     {
         if (agent.velocity == new Vector3(0, 0, 0))
@@ -26,7 +30,6 @@ public class EnemyAnimations : MonoBehaviour
             //if is in front of player
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
-                Debug.Log("Ready to hit the player");
                 if (!couroutineStarted)
                 {
                     couroutineStarted = true;
@@ -38,15 +41,33 @@ public class EnemyAnimations : MonoBehaviour
         }
         else
         {
-            Debug.Log("Walking");
             animator.SetBool("isWalking", true);
         }
     }
 
     void Atack()
     {
-        Debug.Log("Atacking the player");
         animator.SetBool("isAtacking", true);
+    }
+
+
+    public void hit(){
+        hits--;
+        if(hits <= 0){
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isAtacking", false);
+            animator.SetBool("isHit", false);
+            animator.SetBool("isDeath", true);
+            Destroy(gameObject, 3);
+        }else{
+            animator.SetBool("isHit", true);
+            Invoke("Damage", 1);
+        }
+    }
+
+    void Damage()
+    {
+        animator.SetBool("isHit", false);
     }
 
 }
