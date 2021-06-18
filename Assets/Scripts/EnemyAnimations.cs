@@ -18,8 +18,9 @@ public class EnemyAnimations : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    void Update() {
-        
+    void Update()
+    {
+
     }
 
     void LateUpdate()
@@ -48,18 +49,27 @@ public class EnemyAnimations : MonoBehaviour
     void Atack()
     {
         animator.SetBool("isAtacking", true);
+        /*try{
+            CinemachineShake.Instance.ShakeCamera(5f, 1f);
+        }catch{
+
+        }*/
     }
 
 
-    public void hit(){
+    public void hit()
+    {
         hits--;
-        if(hits <= 0){
+        if (hits <= 0)
+        {
             animator.SetBool("isWalking", false);
             animator.SetBool("isAtacking", false);
             animator.SetBool("isHit", false);
             animator.SetBool("isDeath", true);
             Destroy(gameObject, 3);
-        }else{
+        }
+        else
+        {
             animator.SetBool("isHit", true);
             Invoke("Damage", 1);
         }
